@@ -14,8 +14,8 @@
 
 Gradient-surgery methods construct a direction with a desired multi-objective
 geometry before optimizer transformation. However, modern optimizers can alter
-this direction through momentum, adaptive scaling, curvature information, or
-other internal transformations.
+this direction through historical state, adaptive scaling, preconditioning, or
+decoupled weight decay.
 
 Let $a_{t}$ denote the direction constructed before optimizer transformation, $u_{t}$ the optimizer proposal, and $\mathcal{C}_{t}$ the conflict-free cone induced by the
 current loss-specific gradients. Even when
