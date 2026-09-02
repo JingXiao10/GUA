@@ -50,14 +50,7 @@ def _lstsq(matrix: torch.Tensor, rhs: torch.Tensor) -> torch.Tensor:
     solution, _ = torch.lstsq(rhs.unsqueeze(-1), matrix)
     return solution[: matrix.shape[1]].squeeze(-1)
 
-# Reference:
-# @inproceedings{liu2025config,
-#   title={ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
-#   author={Liu, Qiang and Chu, Mengyu and Thuerey, Nils},
-#   booktitle={The Thirteenth International Conference on Learning Representations},
-#   year={2025},
-#   url={https://arxiv.org/abs/2408.11104}
-# }
+
 def ConFIG_update_double(
     grad_1: torch.Tensor,
     grad_2: torch.Tensor,
@@ -128,14 +121,7 @@ def ConFIG_update_double(
             losses=losses,
         )
 
-# Reference:
-# @inproceedings{liu2025config,
-#   title={ConFIG: Towards Conflict-free Training of Physics Informed Neural Networks},
-#   author={Liu, Qiang and Chu, Mengyu and Thuerey, Nils},
-#   booktitle={The Thirteenth International Conference on Learning Representations},
-#   year={2025},
-#   url={https://arxiv.org/abs/2408.11104}
-# }
+
 def ConFIG_update(
     grads: Union[torch.Tensor, Sequence[torch.Tensor]],
     weight_model: WeightModel = EqualWeight(),
