@@ -14,8 +14,8 @@
 
 Gradient-surgery methods construct a direction with a desired multi-objective
 geometry before optimizer transformation. However, modern optimizers can alter
-this direction through historical state, adaptive scaling, preconditioning, or
-decoupled weight decay.
+this direction through various mechanisms, such as historical state, adaptive
+scaling, preconditioning, and decoupled weight decay.
 
 Let $a_{t}$ denote the direction constructed before optimizer transformation, $u_{t}$ the optimizer proposal, and $\mathcal{C}_{t}$ the conflict-free cone induced by the
 current loss-specific gradients. Even when
@@ -35,9 +35,10 @@ We call this optimizer-induced discrepancy **Gradient-Update Mismatch (GUM)**.
 ### How does Gradient-Update Alignment work?
 
 **Gradient-Update Alignment (GUA)** operates after optimizer transformation.
-Given the optimizer proposal $u_{t}$, GUA projects it onto the current
-conflict-free cone under a positive-definite projection metric $M_t\succ0$,
-yielding the aligned update $p_t$,
+Given the constructed direction $a_t$, the optimizer first transforms it into
+the proposal $u_t$. GUA then projects $u_t$ onto the current conflict-free cone
+under a positive-definite projection metric $M_t\succ0$, yielding the aligned
+update $p_t$.
 
 $$
 p_t = \Pi_{\mathcal{C}_t}^{M_t}(u_t).
@@ -112,25 +113,29 @@ Physics-Informed Neural Networks](https://arxiv.org/abs/2609.01558).
 **Abstract.**
 Training Physics-Informed Neural Networks (PINNs) requires jointly optimizing
 physics residual and initial/boundary condition loss terms, which often induce
-conflicting gradients. Gradient surgery methods mitigate this issue by constructing directions from
-loss-specific gradients to reduce conflict before optimizer transformation.
-However, even when the constructed direction is conflict-free, this property
-may not be preserved after optimizer transformation. Let $a_t$ denote the
-direction constructed by gradient surgery, $u_t$ the optimizer proposal, and
-$\mathcal C_t$ the conflict-free cone induced by the loss-specific gradients.
-We show that modern optimizers can transform $a_t$ through mechanisms such as
-historical state, adaptive scaling, preconditioning, or decoupled weight decay, so
-$a_t\in\mathcal C_t$ does not generally imply $u_t\in\mathcal C_t$.
-We refer to this optimizer-induced discrepancy in conflict-freeness between
-$a_t$ and $u_t$ as **Gradient--Update Mismatch (GUM)**. Accordingly, we propose
-**Gradient--Update Alignment (GUA)**, which projects $u_t$ onto $\mathcal C_t$ to
-obtain the aligned update $p_t$ and applies $p_t$ to the parameters. When the
-optimizer maintains internal state, GUA further adjusts this state toward targets
-reconstructed from the applied update. We conduct extensive experiments and find
-that GUM is widespread across momentum, adaptive, and curvature-based optimizers,
-with conflict rates reaching up to 86.3\%. Across all PINN settings, GUA achieves
-conflict-free applied updates and consistently improves various gradient surgery
-methods, reducing the relative $L_2$ error by up to 98.2\% in individual settings.
+conflicting gradients. Gradient surgery methods mitigate this issue by
+constructing directions from loss-specific gradients to reduce conflict before
+optimizer transformation. However, even when the constructed direction is
+conflict-free, this property may not be preserved after optimizer transformation.
+Let $a_t$ denote the direction constructed by gradient surgery, $u_t$ the
+optimizer proposal, and $\mathcal C_t$ the conflict-free cone induced by the
+loss-specific gradients. We show that modern optimizers can transform $a_t$
+through mechanisms including historical state, adaptive scaling, preconditioning,
+and decoupled weight decay, so $a_t\in\mathcal C_t$ does not generally imply $u_t\in\mathcal C_t$. 
+We refer to this optimizer-induced discrepancy in
+conflict-freeness between $a_t$ and $u_t$ as **Gradient--Update Mismatch
+(GUM)**.
+Accordingly, we propose **Gradient--Update Alignment (GUA)**, which performs
+conflict handling on the update actually applied to the parameters. 
+Specifically, after the optimizer transforms $a_t$ into $u_t$, GUA projects $u_t$ 
+onto $\mathcal C_t$ to obtain the aligned update $p_t$, which is then
+applied to the parameters.
+When the optimizer maintains internal state, GUA further adjusts the internal state toward targets
+reconstructed from the applied update.
+Extensive experiments show that GUM is widespread across diverse optimizers,
+with conflict rates reaching up to 86.3\%. Across all PINN settings, GUA
+achieves conflict-free applied updates and consistently improves various
+gradient surgery methods, reducing relative $L_2$ error by up to 98.2\%.
 
 
 ### Citation
