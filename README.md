@@ -329,11 +329,16 @@ python experiments/MTL/celeba/trainer.py \
   --optimizer-correction gua
 ```
 
-The CelebA results reported in the paper use seeds 0--2. They can be run with
+To run the CelebA experiment with a specific random seed, use `--seed <seed>`.
+For example, the following command runs ConFIG with GUA on CelebA using random
+seed 2:
 
-```text
---seeds 0,1,2 --num-run 3
-```
+```bash
+python experiments/MTL/celeba/trainer.py \
+  --method config \
+  --num-tasks 10 \
+  --optimizer-correction gua \
+  --seed 2
 
 Use `--data-path` when the prepared dataset is stored outside the repository,
 and `--save-dir` to select the output directory.
