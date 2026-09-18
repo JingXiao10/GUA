@@ -272,9 +272,8 @@ python experiments/PINN/trainer.py \
 
 Both commands above run one trial with the default paper seed, seed 0.
 
-To reproduce the five-seed PINN evaluation reported in the paper, set
-`--num-run 5`. For example, the following command runs ConFIG with GUA using
-seeds 0--4:
+To run the PINN experiment with a specific random seed, use `--random-seed <seed>`. 
+For example, the following command runs ConFIG with GUA on the Burgers equation using random seed 3:
 
 ```bash
 python experiments/PINN/trainer.py \
@@ -282,12 +281,9 @@ python experiments/PINN/trainer.py \
   --method config \
   --n-losses 2 \
   --optimizer-correction gua \
-  --num-run 5
+  --random-seed 3
 ```
 
-For the corresponding five-seed baseline, change
-`--optimizer-correction gua` to `--optimizer-correction none`. To run one
-specific seed, use `--random-seed <seed>`.
 
 The available equations and methods can also be inspected with:
 
