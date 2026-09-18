@@ -339,6 +339,7 @@ python experiments/MTL/celeba/trainer.py \
   --num-tasks 10 \
   --optimizer-correction gua \
   --seed 2
+```
 
 Use `--data-path` when the prepared dataset is stored outside the repository,
 and `--save-dir` to select the output directory.
